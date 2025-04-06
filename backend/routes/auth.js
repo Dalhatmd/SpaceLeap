@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
+const authMiddleware = require('../middleware/auth');
+
 
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -46,4 +48,17 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Logout route (stateless, just confirms logout on client)
+router.post('/logout', authMiddleware, (req, res) => {
+  // JWT is stateless - token should just be discarded client-side
+  res.status(200).json({ message: 'Logout successful' });
+});
+
+router.get('/profile', authMiddleware, async (req, res) => {
+  const user = await User.findById(req.user.userId).select('-password');
+  res.json(user);
+});
+y
+
 module.exports = router;
