@@ -22,7 +22,7 @@ app.use('/api/bookings', bookingRoutes);
 
 // Base route
 app.get('/', (req, res) => {
-  res.send('Workspace Booking API is up and running!');
+  res.send('Workspace Booking API is up and running!\n');
 });
 
 // Database connection
