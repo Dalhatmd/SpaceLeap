@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
   role: {
     type: String,
     enum: ['admin', 'employee', 'learner'], // TODO: Probably change roles
@@ -27,7 +28,7 @@ const userSchema = new mongoose.Schema({
       default: Date.now
     }
   }],
-  });
+ });
 
 // Hash password before saving
 userSchema.pre('save', async function(next) {
